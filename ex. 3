@@ -1,0 +1,10 @@
+with p_p as (
+select regexp_extract(page_paths, r'.com([^&]+)') as page_path
+from (
+select (select value.string_value from e.event_params where key = 'page_location') as page_paths
+from `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*` e
+) as page_p
+)
+select *
+from p_p
+limit 10;
